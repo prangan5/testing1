@@ -3,8 +3,12 @@ import os
 
 
 def run_command(user_input):
+    # Execute without using a shell to prevent command injection
     result = subprocess.run(
-        f"echo {user_input}", shell=True, capture_output=True, text=True
+        ["echo", user_input],
+        capture_output=True,
+        text=True,
+        check=False
     )
     return result.stdout
 
@@ -18,5 +22,7 @@ def connect_db():
 
 
 def render(template_name):
-    python_code = f"""{{% extends '{template_name}' %}}"""
+    # Restrict template name to a safe filename to avoid template injection
+    safe_name = os.path.basename(template_name)
+    python_code = f"""{{% extends '{safe_name}' %}}"""
     return python_code
