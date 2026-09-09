@@ -1,10 +1,15 @@
-const express = require('express');
-const app = express();
+app.get("/process", (req, res) => {
+    try {
+        const input = JSON.parse(
+            req.query.data
+        );
 
-let token = 'ghp_dummyPlaintextGithubTokenForTesting';
+        res.json(input);
 
-app.get('/', (req, res) => {
-  res.send('Hello');
+    } catch (error) {
+        res.status(500).json({
+            error: error.message,
+            stack: error.stack
+        });
+    }
 });
-
-app.listen(3000);
