@@ -1,8 +1,8 @@
-app.get("/debug-info", (req, res) => {
-    res.json({
-        environment: process.env,
-        nodeVersion: process.version,
-        platform: process.platform,
-        workingDirectory: process.cwd()
-    });
+app.get("/create-session", (req, res) => {
+    res.cookie(
+        "sessionId",
+        "user-session-123456"
+    );
+
+    res.send("Session created");
 });
