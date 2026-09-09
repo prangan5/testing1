@@ -3,8 +3,12 @@ import os
 
 
 def run_command(user_input):
+    # Execute without invoking a shell to prevent command injection
     result = subprocess.run(
-        f"echo {user_input}", shell=True, capture_output=True, text=True
+        ["echo", user_input],
+        capture_output=True,
+        text=True,
+        check=False
     )
     return result.stdout
 
